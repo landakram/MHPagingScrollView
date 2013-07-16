@@ -56,10 +56,13 @@
  */
 - (void)reloadPages;
 
+- (void)reloadPageAtIndex:(NSUInteger)i;
+
 /*
  * Call this from your view controller's UIScrollViewDelegate.
  */
 - (void)scrollViewDidScroll;
+
 
 /*
  * Call this from your view controller's willRotateToInterfaceOrientation if

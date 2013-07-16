@@ -166,6 +166,30 @@
 	}
 }
 
+- (void)reloadPageAtIndex:(NSUInteger)i {
+    
+	for (MHPage *page in _visiblePages)
+	{
+		if ((int)page.index == i)
+		{
+			[_recycledPages addObject:page];
+			[page.view removeFromSuperview];
+		}
+	}
+    
+	[_visiblePages minusSet:_recycledPages];
+    
+    UIView *pageView = [_pagingDelegate pagingScrollView:self pageForIndex:i];
+    pageView.frame = [self frameForPageAtIndex:i];
+    pageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [self addSubview:pageView];
+
+    MHPage *page = [[MHPage alloc] init];
+    page.index = i;
+    page.view = pageView;
+    [_visiblePages addObject:page];
+}
+
 - (void)reloadPages
 {
 	self.contentSize = [self contentSizeForPagingScrollView];
